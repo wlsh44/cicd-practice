@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: cat id_rsa.pub
-      run: cat ~/.ssh/id_rsa.pub
+      run: ls ~/.ssh/id_rsa.pub
     
     - name: Set up JDK 17
       uses: actions/setup-java@v3
