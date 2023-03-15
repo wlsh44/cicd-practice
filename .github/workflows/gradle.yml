@@ -47,7 +47,7 @@ jobs:
         host: ${{ secrets.SERVICE_HOST }}
         key: ${{ secrets.SERVICE_KEY }}
         port: ${{ secrets.SERVICE_PORT }}
-        username: ${{ secrets.SERVICE_USERNAME }}
+        username: root
         script: |
           docker rm -f $(docker ps -qa)
           docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
