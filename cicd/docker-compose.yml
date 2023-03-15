@@ -1,0 +1,9 @@
+version: '3'
+services:
+
+  server:
+    container_name: ci-cd-practice
+    image: k87913j/ci-cd-practice
+    restart: always
+    ports:
+      - "8080:8080"
