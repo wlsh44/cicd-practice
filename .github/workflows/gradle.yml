@@ -33,8 +33,10 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
   
+    - name: Build with Gradle
+      run: ./gradlew bootJar
     
-    - name: Build and push docker image
+    - name: Docker build and push image
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice .
         docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
@@ -46,7 +48,7 @@ jobs:
         key: ${{ secrets.SERVICE_KEY }}
         port: ${{ secrets.SERVICE_PORT }}
         username: ${{ secrets.SERVICE_USERNAME }}
-        scripts: |
+        script: |
           docker rm -f $(docker ps -qa)
           docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
           
