@@ -36,9 +36,10 @@ jobs:
     - name: Pull docker image and deploy
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        key: ${{ secrets.KEY }}
-        username: ubuntu
+        host: ${{ secrets.SERVICE_HOST }}
+        key: ${{ secrets.SERVICE_KEY }}
+        port: ${{ secrets.SERVICE_PORT }}
+        username: ${{ secrets.SERVICE_USERNAME }}
         scripts: |
           docker rm -f $(docker ps -qa)
           docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
