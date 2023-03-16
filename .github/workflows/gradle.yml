@@ -51,8 +51,4 @@ jobs:
         script: |
           docker rm -f $(docker ps -qa)
           docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
-          
-          echo "${{ secrets.PROPERTIES_PROD }}" > application-prod.yml
-          docker cp application-prod.yml ci-cd-practice:/.
-          
-          docker-compose up -d
+          docker compose up -d
