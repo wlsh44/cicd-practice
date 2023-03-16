@@ -45,12 +45,13 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVICE_HOST }}
-        #password: ${{ secrets.SERVICE_PASSWORD }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.SERVICE_PORT }}
         username: root
         script: |
-          ls
+          echo ${{ secrets.APPLICATION_PROD }}
+          echo ${{ secrets.APPLICATION_PROD }} >> /application-prod.yml
           #docker rm -f $(docker ps -qa)
           #docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
           #docker compose up -d
+          docker image prune -f
