@@ -50,7 +50,7 @@ jobs:
         username: root
         script: |
           echo ${{ secrets.APPLICATION_PROD }}
-          echo ${{ secrets.APPLICATION_PROD }} >> /application-prod.yml
+          echo ${{ secrets.APPLICATION_PROD }} >> ./application-prod.yml
           #docker rm -f $(docker ps -qa)
           #docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
           #docker compose up -d
