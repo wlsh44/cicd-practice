@@ -52,6 +52,6 @@ jobs:
           echo ${{ secrets.APPLICATION_PROD }} > ./application-prod.yml
           docker rm -f $(docker ps -qa)
           docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
-          docker compose cp application-prod.yml server:/
           docker compose up -d
+          docker compose cp application-prod.yml server:/
           docker image prune -f
