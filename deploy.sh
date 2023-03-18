@@ -1,41 +1,49 @@
 # !/bin/bash
 
+echo "########################### Start Deploy!! ###########################"
+
 DEFAULT_CONF="/root/nginx/default.conf"
 IS_BLUE_RUNNING=$(docker ps | grep blue)
 
 if [ -n "$IS_BLUE_RUNNING" ]; then
-    DEPLOY="green"
-    RUNNING="blue"
+    IDLE_SERVER="green"
+    CURRENT_SERVER="blue"
 else
-    DEPLOY="blue"
-    RUNNING="green"
+    IDLE_SERVER="blue"
+    CURRENT_SERVER="green"
 fi
 
-echo "########################### $RUNNING is running... ###########################"
+echo ">>>>>>>>>>>>>>>>>> $CURRENT_SERVER is running..."
 
-echo "########################### Pull docker image to $DEPLOY... ###########################"
-docker compose pull $DEPLOY
+echo ">>>>>>>>>>>>>>>>>> Pull docker image to $IDLE_SERVER..."
+docker compose pull $IDLE_SERVER
 
-echo "########################### Deploy $DEPLOY... ###########################"
-docker compose up -d $DEPLOY
+echo ">>>>>>>>>>>>>>>>>> Deploy $IDLE_SERVER..."
+docker compose up -d $IDLE_SERVER
 
-while true
+for ((RETRY_COUNT=0; RETRY_COUNT <= 10; RETRY_COUNT++));
 do
-    echo " health checking $DEPLOY..."
-    REQUEST=$(docker exec nginx curl http://$DEPLOY:8080)
+    echo " health checking $IDLE_SERVER..."
+    REQUEST=$(docker exec nginx curl http://$IDLE_SERVER:8080)
     echo $REQUEST
     if [ -n "$REQUEST" ]; then
-        break;
+        echo ">>>>>>>>>>>>>>>>>> Success health checking!!"
+        break
+    fi
+    if [ $RETRY_COUNT -eq 10 ]; then
+        echo " Health checking $IDLE_SERVER failed "
+        echo ">>>>>>>>>>>>>>>>>> Stop deploying new application"
+        exit 1
     fi
     sleep 3
 done;
 
 
-echo "########################### Nginx reload... ###########################"
-sed -i "s/$RUNNING/$DEPLOY/g" $DEFAULT_CONF
+echo ">>>>>>>>>>>>>>>>>> Nginx reload..."
+sed -i "s/$CURRENT_SERVER/$IDLE_SERVER/g" $DEFAULT_CONF
 docker exec -d nginx service nginx reload
 
-echo "########################### Stop $RUNNING... ###########################"
-docker compose stop $RUNNING
+echo ">>>>>>>>>>>>>>>>>> Stop $CURRENT_SERVER..."
+docker compose stop $CURRENT_SERVER
 
 echo "########################### Deploy finished!! ###########################"
