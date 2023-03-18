@@ -13,7 +13,7 @@ public class VersionController {
 
     @GetMapping("/")
     public ResponseEntity<String> version() {
-        String version = "1.0.1";
+        String version = "1.0.3";
         return ResponseEntity.ok(env + " " + version);
     }
 }
