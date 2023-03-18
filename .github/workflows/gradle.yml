@@ -60,4 +60,4 @@ jobs:
         username: root
         script: |
           echo ${{ secrets.APPLICATION_PROD }} > ./config/application-prod.yml
-          ./deploy.sh
+          ./deploy2.sh
