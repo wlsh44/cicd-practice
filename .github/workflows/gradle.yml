@@ -51,7 +51,7 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice .
         docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
       
-    - name: Pull docker image and deploy
+    - name: Deploy application
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVICE_HOST }}
@@ -60,7 +60,4 @@ jobs:
         username: root
         script: |
           echo ${{ secrets.APPLICATION_PROD }} > ./config/application-prod.yml
-          docker rm -f $(docker ps -qa)
-          docker pull ${{ secrets.DOCKER_USERNAME }}/ci-cd-practice
-          docker compose up -d
-          docker image prune -f
+          ./deploy.sh
