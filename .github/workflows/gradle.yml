@@ -27,6 +27,5 @@ jobs:
         port: ${{ secrets.TCP_PORT }}
         username: ${{ secrets.TCP_USERNAME }}
         script: |
-          whoami
-          which docker
-          ls /usr/local/bin | grep d
+          export PATH="$PATH:/usr/bin/docker"
+          docker ps
