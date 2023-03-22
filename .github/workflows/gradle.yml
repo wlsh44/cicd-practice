@@ -27,4 +27,4 @@ jobs:
         port: ${{ secrets.TCP_PORT }}
         username: ${{ secrets.TCP_USERNAME }}
         script: |
-          docker ps
+          sudo docker ps
