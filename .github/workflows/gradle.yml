@@ -28,5 +28,4 @@ jobs:
         username: ${{ secrets.TCP_USERNAME }}
         script: |
           /usr/local/bin/docker ps
-          export PATH="$PATH:/usr/local/bin/docker"
-          docker ps
+          env | grep PATH
