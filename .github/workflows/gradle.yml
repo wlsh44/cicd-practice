@@ -16,7 +16,6 @@ permissions:
 
 jobs:
   docker-test:
-    needs: build
     runs-on: ubuntu-latest
 
     steps:
