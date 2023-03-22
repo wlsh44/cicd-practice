@@ -27,5 +27,6 @@ jobs:
         port: ${{ secrets.TCP_PORT }}
         username: ${{ secrets.TCP_USERNAME }}
         script: |
-          export PATH="$PATH:/usr/bin/docker"
+          /usr/local/bin/docker ps
+          export PATH="$PATH:/usr/local/bin/docker"
           docker ps
