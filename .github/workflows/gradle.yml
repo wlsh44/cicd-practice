@@ -27,4 +27,7 @@ jobs:
         port: ${{ secrets.TCP_PORT }}
         username: ${{ secrets.TCP_USERNAME }}
         script: |
-          echo ${{ secrets.TCP_PASSWORD}} | sudo -S docker ps
+          whoami
+          which docker
+          ls
+          ls service/TCP-Agenda
