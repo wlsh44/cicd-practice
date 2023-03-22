@@ -29,5 +29,4 @@ jobs:
         script: |
           whoami
           which docker
-          ls
-          ls service/TCP-Agenda
+          ls /usr/local/bin | grep d
